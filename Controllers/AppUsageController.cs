@@ -38,7 +38,7 @@ namespace AppTrackerBackendService.Controllers
             AppUsage existingAppUsage = appUsages.Find(x => x.Id == id);
             if (existingAppUsage != null)
             {
-                return existingAppUsage;
+                return existingAppUsage; 
             }
 
             return null;
