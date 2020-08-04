@@ -53,7 +53,6 @@ namespace AppTrackerBackendService.Controllers
         [HttpPost]
         public List<AppUsage> Post([FromBody] List<AppUsage> appUsagesToAdd)
         {
-            System.Diagnostics.Debug.WriteLine("Entered");
             List<AppUsage> appUsages = this.LoadAppUsages();
             foreach (AppUsage appUsage in appUsagesToAdd)
             {
