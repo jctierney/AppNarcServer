@@ -3,6 +3,7 @@ namespace AppTrackerBackendService.Controllers
 {
     using System.Collections.Generic;
     using System.Text.Json;
+    using AppNarcServer.Comparators;
     using AppTrackerBackendService.Entity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,21 @@ namespace AppTrackerBackendService.Controllers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// GET method to get the top 10 <see cref="AppUsage"/> by time used.
+        /// </summary>
+        /// <returns>A list of the top 10 <see cref="AppUsage"/>s by time used.</returns>
+        [HttpGet("top10")]
+        public List<AppUsage> GetTop10()
+        {
+            List<AppUsage> allAppUsages = this.LoadAppUsages();
+            AppUsageTimeUsedComparator comparator = new AppUsageTimeUsedComparator();
+            allAppUsages.Sort(comparator);
+
+            List<AppUsage> top10AppUsagesByTime = allAppUsages.GetRange(0, 10);
+            return top10AppUsagesByTime;
         }
 
         /// <summary>
