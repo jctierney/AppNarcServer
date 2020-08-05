@@ -21,6 +21,7 @@ variables:
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 stages:
 - stage: Build
@@ -29,7 +30,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      vmImage: $(vmImage)
     steps:
     - task: NuGetToolInstaller@1
 
