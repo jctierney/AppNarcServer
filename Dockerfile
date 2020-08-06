@@ -5,6 +5,10 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ENV Database=appnarc
+ENV DatabaseHost=localhost
+ENV DatabasePort=27017
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["AppNarcServer.csproj", ""]

@@ -17,7 +17,10 @@ namespace AppNarcServer.Context
         /// </summary>
         public UserAppUsageProvider()
         {
-            new DB("appnarc-dev", "192.168.1.136", 27017);
+            string database = Environment.GetEnvironmentVariable("Database");
+            string databaseHost = Environment.GetEnvironmentVariable("DatabaseHost");
+            int.TryParse(Environment.GetEnvironmentVariable("DatabasePort"), out int databasePort);
+            new DB(database, databaseHost, databasePort);
         }
 
         /// <summary>
