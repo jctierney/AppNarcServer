@@ -1,18 +1,15 @@
 ﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
 namespace AppTrackerBackendService.Entity
 {
+    using MongoDB.Entities.Core;
+
     /// <summary>
     /// An entity that defines the usage of an application.
     /// This entity is used to track the time and the environment where the application was used, not the application itself.
     /// Any information on a specific application should be stored inside of the <see cref="AppInfo"/> entity.
     /// </summary>
-    public class AppUsage
+    public class AppUsage : Entity
     {
-        /// <summary>
-        /// Gets or sets the ID of the individual App Usage.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the name of the application that's being used.
         /// </summary>
