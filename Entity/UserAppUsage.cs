@@ -1,6 +1,7 @@
 ﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
 namespace AppNarcServer.Entity
 {
+    using System;
     using System.Collections.Generic;
     using AppTrackerBackendService.Entity;
     using MongoDB.Entities.Core;
@@ -19,5 +20,7 @@ namespace AppNarcServer.Entity
         /// Gets or sets the list of apps the user uses.
         /// </summary>
         public List<AppUsage> AppUsages { get; set; }
+
+        public DateTime LastAppUsageUpdateTime { get; set; }
     }
 }
