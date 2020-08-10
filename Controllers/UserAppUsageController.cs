@@ -1,6 +1,7 @@
 ﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
 namespace AppNarcServer.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using AppNarcServer.Context;
@@ -53,6 +54,7 @@ namespace AppNarcServer.Controllers
             }
 
             List<AppUsage> existingAppUsages = existingUserAppUsage.AppUsages;
+            List<AppUsage> newAppUsages = userAppUsage.AppUsages;
             foreach (AppUsage usage in userAppUsage.AppUsages)
             {
                 AppUsage existingAppUsage = existingAppUsages.Find(x => x.Name.Equals(usage.Name));
