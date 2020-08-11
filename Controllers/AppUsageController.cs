@@ -33,10 +33,10 @@ namespace AppTrackerBackendService.Controllers
         /// <param name="id">The ID of the <see cref="AppUsage"/> to return.</param>
         /// <returns>If an AppUsage is found with the provided ID, it will return that specific AppUsage in JSON format. If no AppUsage is found with the provided ID, it will currently return an empty response body.</returns>
         [HttpGet("{id}")]
-        public AppUsage Get(int id)
+        public AppUsage Get(string id)
         {
             List<AppUsage> appUsages = this.LoadAppUsages();
-            AppUsage existingAppUsage = appUsages.Find(x => x.Id == id);
+            AppUsage existingAppUsage = appUsages.Find(x => x.Name == id);
             if (existingAppUsage != null)
             {
                 return existingAppUsage;
