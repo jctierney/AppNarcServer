@@ -1,7 +1,7 @@
-﻿namespace AppNarcServer.Context
+﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
+namespace AppNarcServer.Context
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using AppNarcServer.Entity;
@@ -13,6 +13,9 @@
     /// </summary>
     public class AppInfoProvider
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppInfoProvider"/> class.
+        /// </summary>
         public AppInfoProvider()
         {
             string database = Environment.GetEnvironmentVariable("Database");
@@ -25,7 +28,7 @@
         /// Finds information on a specific application.
         /// </summary>
         /// <param name="alternateName">The process name of the application.</param>
-        /// <returns></returns>
+        /// <returns>The AppInfo found that corresponds to the alternate name passed in.</returns>
         public AppInfo FindAppinfoByAlternateName(string alternateName)
         {
             try

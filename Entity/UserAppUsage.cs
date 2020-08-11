@@ -21,6 +21,9 @@ namespace AppNarcServer.Entity
         /// </summary>
         public List<AppUsage> AppUsages { get; set; }
 
+        /// <summary>
+        /// Gets or sets the last time this app usage was updated for its time used.
+        /// </summary>
         public DateTime LastAppUsageUpdateTime { get; set; }
     }
 }

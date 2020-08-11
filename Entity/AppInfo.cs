@@ -1,4 +1,5 @@
-﻿namespace AppNarcServer.Entity
+﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
+namespace AppNarcServer.Entity
 {
     using System.Collections.Generic;
     using MongoDB.Entities.Core;
