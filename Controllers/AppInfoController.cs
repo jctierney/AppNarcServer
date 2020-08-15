@@ -43,13 +43,6 @@ namespace AppNarcServer.Controllers
         public void Post([FromBody] AppInfo appInfoToAdd)
         {
             appInfoToAdd.Save();
-            //string id = appInfoToAdd.ID;
-            //AppInfo existingAppInfo = this.appInfoProvider.FindAppInfoById(id);
-            //if (existingAppInfo == null)
-            //{
-            //    appInfoToAdd.Save();
-            //    return;
-            //}
         }
     }
 }

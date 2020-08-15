@@ -13,17 +13,6 @@ namespace AppNarcServer.Context
     public class UserAppUsageProvider
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserAppUsageProvider"/> class.
-        /// </summary>
-        public UserAppUsageProvider()
-        {
-            string database = Environment.GetEnvironmentVariable("Database");
-            string databaseHost = Environment.GetEnvironmentVariable("DatabaseHost");
-            int.TryParse(Environment.GetEnvironmentVariable("DatabasePort"), out int databasePort);
-            new DB(database, databaseHost, databasePort);
-        }
-
-        /// <summary>
         /// Finds a <see cref="UserAppUsage"/> by the user name associated with it.
         /// </summary>
         /// <param name="userName">A unique username that identifies a specific user's app usage.</param>

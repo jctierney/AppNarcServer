@@ -47,32 +47,14 @@ namespace AppNarcServer.Controllers
         public void Post([FromBody] UserAppUsage userAppUsage)
         {
             UserAppUsage existingUserAppUsage = this.userAppUsageProvider.FindUserAppUsageByUserName(userAppUsage.UserName);
-            if (existingUserAppUsage == null)
+
+            if (existingUserAppUsage != null)
             {
-                existingUserAppUsage = userAppUsage;
                 existingUserAppUsage.Save();
-                return;
             }
-
-            List<AppUsage> existingAppUsages = existingUserAppUsage.AppUsages;
-            List<AppUsage> newAppUsages = userAppUsage.AppUsages;
-            foreach (AppUsage usage in userAppUsage.AppUsages)
+            else
             {
-                AppUsage existingAppUsage = existingAppUsages.Find(x => x.Name.Equals(usage.Name));
-                if (existingAppUsage != null)
-                {
-                    Debug.WriteLine("Exists!");
-                    existingAppUsage.TimeUsed += usage.TimeUsed;
-                    existingAppUsage.Save();
-                }
-                else
-                {
-                    Debug.WriteLine("Does not exist.");
-                    usage.Save();
-                    existingAppUsages.Add(usage);
-                }
-
-                existingUserAppUsage.Save();
+                userAppUsage.Save();
             }
         }
     }
