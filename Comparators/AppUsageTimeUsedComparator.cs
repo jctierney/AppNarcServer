@@ -15,7 +15,7 @@ namespace AppNarcServer.Comparators
         /// </summary>
         /// <param name="timeUsed1">The first timeUsed to compuare.</param>
         /// <param name="timeUsed2">The second timeUsed to compare.</param>
-        /// <returns>0, 1, or -1 depenfing on the value.</returns>
+        /// <returns>0, 1, or -1 depending on the value.</returns>
         public int Compare([AllowNull] AppUsage timeUsed1, [AllowNull] AppUsage timeUsed2)
         {
             return timeUsed2.TimeUsed.CompareTo(timeUsed1.TimeUsed);

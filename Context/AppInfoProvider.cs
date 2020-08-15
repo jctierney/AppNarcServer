@@ -25,6 +25,25 @@ namespace AppNarcServer.Context
         }
 
         /// <summary>
+        /// Finds an <see cref="AppInfo"/> by its ID.
+        /// </summary>
+        /// <param name="id">ID of the <see cref="AppInfo"/> you want to find.</param>
+        /// <returns>The <see cref="AppInfo"/> if one is found with the associated ID. Otherwise, returns a null value indicating no AppInfo was found with the ID.</returns>
+        public AppInfo FindAppInfoById(string id)
+        {
+            try
+            {
+                return DB.Find<AppInfo>().One(id);
+            }
+            catch (Exception exc)
+            {
+                Debug.WriteLine("There was an exception finding the AppInfo");
+                Debug.WriteLine(exc.StackTrace);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Finds information on a specific application.
         /// </summary>
         /// <param name="alternateName">The process name of the application.</param>

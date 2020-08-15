@@ -49,7 +49,8 @@ namespace AppNarcServer.Controllers
             UserAppUsage existingUserAppUsage = this.userAppUsageProvider.FindUserAppUsageByUserName(userAppUsage.UserName);
             if (existingUserAppUsage == null)
             {
-                userAppUsage.Save();
+                existingUserAppUsage = userAppUsage;
+                existingUserAppUsage.Save();
                 return;
             }
 

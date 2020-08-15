@@ -25,5 +25,10 @@ namespace AppNarcServer.Entity
         /// Gets or sets the descripton of the application.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category of the application.
+        /// </summary>
+        public AppCategory Category { get; set; }
     }
 }

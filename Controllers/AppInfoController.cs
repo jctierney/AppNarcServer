@@ -13,7 +13,7 @@ namespace AppNarcServer.Controllers
     [ApiController]
     public class AppInfoController : ControllerBase
     {
-        private AppInfoProvider appInfoProvider;
+        private readonly AppInfoProvider appInfoProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInfoController"/> class.
@@ -42,13 +42,14 @@ namespace AppNarcServer.Controllers
         [HttpPost]
         public void Post([FromBody] AppInfo appInfoToAdd)
         {
-            string alternateName = appInfoToAdd.AlternateNames[0];
-            AppInfo existingAppInfo = this.appInfoProvider.FindAppinfoByAlternateName(alternateName);
-            if (existingAppInfo == null)
-            {
-                appInfoToAdd.Save();
-                return;
-            }
+            appInfoToAdd.Save();
+            //string id = appInfoToAdd.ID;
+            //AppInfo existingAppInfo = this.appInfoProvider.FindAppInfoById(id);
+            //if (existingAppInfo == null)
+            //{
+            //    appInfoToAdd.Save();
+            //    return;
+            //}
         }
     }
 }

@@ -23,9 +23,11 @@ namespace AppTrackerBackendService
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(
-                    "AllowOrigin",
-                    builder => builder.WithOrigins("*"));
+                options.AddDefaultPolicy(
+                    builder => builder.WithOrigins("*")
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod());
             });
             services.AddControllers();
         }
@@ -44,8 +46,7 @@ namespace AppTrackerBackendService
 
             app.UseAuthorization();
 
-            app.UseCors(builder =>
-                builder.WithOrigins("*"));
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
