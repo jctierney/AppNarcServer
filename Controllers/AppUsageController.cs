@@ -2,10 +2,10 @@
 namespace AppTrackerBackendService.Controllers
 {
     using System.Collections.Generic;
-    using System.Text.Json;
-    using AppNarcServer.Comparators;
+    using AppNarcServer.Context;
     using AppTrackerBackendService.Entity;
     using Microsoft.AspNetCore.Mvc;
+    using MongoDB.Entities;
 
     /// <summary>
     /// The controller that handles all of the GET/POST/DELETE for <see cref="AppUsage"/>.
@@ -14,7 +14,15 @@ namespace AppTrackerBackendService.Controllers
     [ApiController]
     public class AppUsageController : ControllerBase
     {
-        private static readonly string JsonFilePath = "./AppUsage.json";
+        private AppUsageProvider appUsageProvider;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppUsageController"/> class.
+        /// </summary>
+        public AppUsageController()
+        {
+            this.appUsageProvider = new AppUsageProvider();
+        }
 
         /// <summary>
         /// The GET method for returning a list of all AppUsages in the system.
@@ -23,41 +31,18 @@ namespace AppTrackerBackendService.Controllers
         [HttpGet]
         public List<AppUsage> Get()
         {
-            List<AppUsage> appUsages = this.LoadAppUsages();
-            return appUsages;
+            return null;
         }
 
         /// <summary>
         /// GET method to get an individual <see cref="AppUsage"/> based on the provided Id.
         /// </summary>
-        /// <param name="id">The ID of the <see cref="AppUsage"/> to return.</param>
+        /// <param name="userId">The ID of the user that is using the application for the <see cref="AppUsage"/> to return.</param>
         /// <returns>If an AppUsage is found with the provided ID, it will return that specific AppUsage in JSON format. If no AppUsage is found with the provided ID, it will currently return an empty response body.</returns>
-        [HttpGet("{id}")]
-        public AppUsage Get(string id)
+        [HttpGet("user/{userId}")]
+        public List<AppUsage> Get(string userId = "")
         {
-            List<AppUsage> appUsages = this.LoadAppUsages();
-            AppUsage existingAppUsage = appUsages.Find(x => x.Name == id);
-            if (existingAppUsage != null)
-            {
-                return existingAppUsage;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// GET method to get the top 10 <see cref="AppUsage"/> by time used.
-        /// </summary>
-        /// <returns>A list of the top 10 <see cref="AppUsage"/>s by time used.</returns>
-        [HttpGet("top10")]
-        public List<AppUsage> GetTop10()
-        {
-            List<AppUsage> allAppUsages = this.LoadAppUsages();
-            AppUsageTimeUsedComparator comparator = new AppUsageTimeUsedComparator();
-            allAppUsages.Sort(comparator);
-
-            List<AppUsage> top10AppUsagesByTime = allAppUsages.GetRange(0, 10);
-            return top10AppUsagesByTime;
+            return this.appUsageProvider.FindByUser(userId);
         }
 
         /// <summary>
@@ -69,42 +54,23 @@ namespace AppTrackerBackendService.Controllers
         [HttpPost]
         public List<AppUsage> Post([FromBody] List<AppUsage> appUsagesToAdd)
         {
-            List<AppUsage> appUsages = this.LoadAppUsages();
             foreach (AppUsage appUsage in appUsagesToAdd)
             {
-                AppUsage existingAppUsage = appUsages.Find(x => x.Name.Equals(appUsage.Name) && x.Environment.Equals(appUsage.Environment));
+                string userId = appUsage.UserId;
+                string appName = appUsage.Name;
+                AppUsage existingAppUsage = this.appUsageProvider.FindByUserAndName(userId, appName);
                 if (existingAppUsage != null)
                 {
                     existingAppUsage.TimeUsed += appUsage.TimeUsed;
+                    existingAppUsage.Save();
                 }
                 else
                 {
-                    appUsages.Add(appUsage);
+                    appUsage.Save();
                 }
             }
 
-            this.SaveAppUsages(appUsages);
             return appUsagesToAdd;
-        }
-
-        /// <summary>
-        /// Loads the app usages from our JSON file.
-        /// </summary>
-        /// <returns>A list of <see cref="AppUsage"/>s loaded from the JSON file.</returns>
-        protected List<AppUsage> LoadAppUsages()
-        {
-            string jsonData = System.IO.File.ReadAllText(JsonFilePath);
-            return JsonSerializer.Deserialize<List<AppUsage>>(jsonData);
-        }
-
-        /// <summary>
-        /// Saves a list of app usages to the JSON file.
-        /// </summary>
-        /// <param name="appUsagesToSave">The list of app usages to save to the file.</param>
-        protected void SaveAppUsages(List<AppUsage> appUsagesToSave)
-        {
-            string jsonData = JsonSerializer.Serialize(appUsagesToSave);
-            System.IO.File.WriteAllText(JsonFilePath, jsonData);
         }
     }
 }

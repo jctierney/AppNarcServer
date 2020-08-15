@@ -17,11 +17,6 @@ namespace AppNarcServer.Entity
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of apps the user uses.
-        /// </summary>
-        public List<AppUsage> AppUsages { get; set; }
-
-        /// <summary>
         /// Gets or sets the last time this app usage was updated for its time used.
         /// </summary>
         public DateTime LastAppUsageUpdateTime { get; set; }

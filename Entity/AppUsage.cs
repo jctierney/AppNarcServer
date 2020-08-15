@@ -21,6 +21,11 @@ namespace AppTrackerBackendService.Entity
         public int TimeUsed { get; set; }
 
         /// <summary>
+        /// Gets or sets the user id associated with this application usage.
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
         /// Gets or sets the environment the application is used in.
         /// </summary>
         public AppEnvironment Environment { get; set; }
