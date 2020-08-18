@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppNarcServer", "./AppNarcService/AppNarcServer.csproj", "{7C34B0BD-F3D7-4147-856F-9521963E401A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppNarcServer", "AppNarcService\AppNarcServer.csproj", "{7C34B0BD-F3D7-4147-856F-9521963E401A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AEBE290-FAF2-4C44-B92D-B9A04BE826E3}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppNarcServerTest", "AppNarcServiceTest\AppNarcServerTest.csproj", "{A6BC6681-C5E8-4E96-A800-FD96372C4509}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{7C34B0BD-F3D7-4147-856F-9521963E401A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C34B0BD-F3D7-4147-856F-9521963E401A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C34B0BD-F3D7-4147-856F-9521963E401A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BC6681-C5E8-4E96-A800-FD96372C4509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BC6681-C5E8-4E96-A800-FD96372C4509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BC6681-C5E8-4E96-A800-FD96372C4509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BC6681-C5E8-4E96-A800-FD96372C4509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
