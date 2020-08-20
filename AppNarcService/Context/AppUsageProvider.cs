@@ -19,7 +19,7 @@ namespace AppNarcServer.Context
         /// </summary>
         /// <param name="userId">The User ID used to find all of the associated <see cref="AppUsage"/>s.</param>
         /// <returns>A list of <see cref="AppUsage"/>s associated with the user ID. If none are found, this returns null.</returns>
-        public List<AppUsage> FindByUser(string userId)
+        public virtual List<AppUsage> FindByUser(string userId)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace AppNarcServer.Context
         /// <param name="userId">The ID of the user that is using this application.</param>
         /// <param name="appName">The name of the application to find.</param>
         /// <returns>A single <see cref="AppUsage"/> that has the specified app name and user ID.</returns>
-        public AppUsage FindByUserAndName(string userId, string appName)
+        public virtual AppUsage FindByUserAndName(string userId, string appName)
         {
             try
             {

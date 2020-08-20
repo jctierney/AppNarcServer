@@ -1,12 +1,8 @@
 ﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
 namespace AppNarcServer.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
     using AppNarcServer.Context;
     using AppNarcServer.Entity;
-    using AppTrackerBackendService.Entity;
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Entities;
 

@@ -1,8 +1,9 @@
 ﻿// Copyright (c) WinQuire. All Rights Reserved. Licensed under the MIT License. See LICENSE in the project root for license information.
-namespace AppTrackerBackendService.Controllers
+namespace AppTrackerService.Controllers
 {
     using System.Collections.Generic;
     using AppNarcServer.Context;
+    using AppNarcServer.Context.Administrator;
     using AppTrackerBackendService.Entity;
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Entities;
@@ -16,12 +17,25 @@ namespace AppTrackerBackendService.Controllers
     {
         private AppUsageProvider appUsageProvider;
 
+        private AppUsageAdministrator appUsageAdministrator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppUsageController"/> class.
         /// </summary>
         public AppUsageController()
         {
             this.appUsageProvider = new AppUsageProvider();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppUsageController"/> class.
+        /// </summary>
+        /// <param name="appUsageProvider">A <see cref="AppUsageProvider"/> to implement.</param>
+        /// <param name="appUsageAdministrator">A <see cref="AppUsageAdministrator"/> to implement.</param>
+        public AppUsageController(AppUsageProvider appUsageProvider, AppUsageAdministrator appUsageAdministrator)
+        {
+            this.appUsageProvider = appUsageProvider;
+            this.appUsageAdministrator = appUsageAdministrator;
         }
 
         /// <summary>
@@ -54,6 +68,7 @@ namespace AppTrackerBackendService.Controllers
         [HttpPost]
         public List<AppUsage> Post([FromBody] List<AppUsage> appUsagesToAdd)
         {
+            List<AppUsage> updatedAppUsages = new List<AppUsage>();
             foreach (AppUsage appUsage in appUsagesToAdd)
             {
                 string userId = appUsage.UserId;
@@ -62,15 +77,17 @@ namespace AppTrackerBackendService.Controllers
                 if (existingAppUsage != null)
                 {
                     existingAppUsage.TimeUsed += appUsage.TimeUsed;
-                    existingAppUsage.Save();
+                    this.appUsageAdministrator.SaveAppUsage(existingAppUsage);
+                    updatedAppUsages.Add(appUsage);
                 }
                 else
                 {
-                    appUsage.Save();
+                    this.appUsageAdministrator.SaveAppUsage(appUsage);
+                    updatedAppUsages.Add(appUsage);
                 }
             }
 
-            return appUsagesToAdd;
+            return updatedAppUsages;
         }
     }
 }
