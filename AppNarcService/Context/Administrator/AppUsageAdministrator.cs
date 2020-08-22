@@ -7,12 +7,9 @@ namespace AppNarcServer.Context.Administrator
     /// <summary>
     /// Administrator class for the <see cref="AppUsage"/> class. Handles saving/updating of the entity.
     /// </summary>
-    public class AppUsageAdministrator
+    public class AppUsageAdministrator : IAppUsageAdministrator
     {
-        /// <summary>
-        /// Saves an <see cref="AppUsage"/> to the database.
-        /// </summary>
-        /// <param name="appUsage">The AppUsage to save.</param>
+        /// <inheritdoc/>
         public virtual void SaveAppUsage(AppUsage appUsage)
         {
             appUsage.Save();

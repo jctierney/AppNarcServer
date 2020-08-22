@@ -2,8 +2,6 @@
 namespace AppNarcServer.Entity
 {
     using System;
-    using System.Collections.Generic;
-    using AppTrackerBackendService.Entity;
     using MongoDB.Entities.Core;
 
     /// <summary>
@@ -15,10 +13,5 @@ namespace AppNarcServer.Entity
         /// Gets or sets the user name of the user.
         /// </summary>
         public string UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the last time this app usage was updated for its time used.
-        /// </summary>
-        public DateTime LastAppUsageUpdateTime { get; set; }
     }
 }

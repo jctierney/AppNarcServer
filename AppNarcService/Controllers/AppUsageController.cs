@@ -15,24 +15,16 @@ namespace AppTrackerService.Controllers
     [ApiController]
     public class AppUsageController : ControllerBase
     {
-        private AppUsageProvider appUsageProvider;
+        private IAppUsageProvider appUsageProvider;
 
-        private AppUsageAdministrator appUsageAdministrator;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppUsageController"/> class.
-        /// </summary>
-        public AppUsageController()
-        {
-            this.appUsageProvider = new AppUsageProvider();
-        }
+        private IAppUsageAdministrator appUsageAdministrator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppUsageController"/> class.
         /// </summary>
-        /// <param name="appUsageProvider">A <see cref="AppUsageProvider"/> to implement.</param>
-        /// <param name="appUsageAdministrator">A <see cref="AppUsageAdministrator"/> to implement.</param>
-        public AppUsageController(AppUsageProvider appUsageProvider, AppUsageAdministrator appUsageAdministrator)
+        /// <param name="appUsageProvider">The <see cref="AppUsageProvider"/> implementation to use.</param>
+        /// <param name="appUsageAdministrator">The <see cref="AppUsageAdministrator"/> implementation to use.</param>
+        public AppUsageController(IAppUsageProvider appUsageProvider, IAppUsageAdministrator appUsageAdministrator)
         {
             this.appUsageProvider = appUsageProvider;
             this.appUsageAdministrator = appUsageAdministrator;
@@ -52,7 +44,8 @@ namespace AppTrackerService.Controllers
         /// GET method to get an individual <see cref="AppUsage"/> based on the provided Id.
         /// </summary>
         /// <param name="userId">The ID of the user that is using the application for the <see cref="AppUsage"/> to return.</param>
-        /// <returns>If an AppUsage is found with the provided ID, it will return that specific AppUsage in JSON format. If no AppUsage is found with the provided ID, it will currently return an empty response body.</returns>
+        /// <returns>If an AppUsage is found with the provided ID, it will return that specific AppUsage in JSON format.
+        /// If no AppUsage is found with the provided ID, it will currently return an empty response body.</returns>
         [HttpGet("user/{userId}")]
         public List<AppUsage> Get(string userId = "")
         {

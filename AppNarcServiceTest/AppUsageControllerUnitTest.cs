@@ -8,7 +8,7 @@ using AppNarcServer.Context.Administrator;
 
 namespace AppNarcServerTest
 {
-    public class Tests
+    public class AppUsageControllerUnitTest
     {
         [SetUp]
         public void Setup()
@@ -64,10 +64,10 @@ namespace AppNarcServerTest
 
             testAppUsages.Add(testAppUsage);
 
-            var appUsageAdministratorMock = new Mock<AppUsageAdministrator>();
+            var appUsageAdministratorMock = new Mock<IAppUsageAdministrator>();
             appUsageAdministratorMock.Setup(admin => admin.SaveAppUsage(testAppUsage));
 
-            var appUsageProviderMock = new Mock<AppUsageProvider>();
+            var appUsageProviderMock = new Mock<IAppUsageProvider>();
             AppUsage nullAppUsage = null;
             appUsageProviderMock.Setup(provider => provider.FindByUserAndName(userId, appName)).Returns(nullAppUsage);
 
@@ -77,8 +77,7 @@ namespace AppNarcServerTest
             List<AppUsage> actualAppUsageResults = appUsageController.Post(testAppUsages);
 
             // Assert
-            Assert.IsNotNull(actualAppUsageResults);
-            Assert.IsNotEmpty(actualAppUsageResults);                       
+            AppUsage actualAppUsage = actualAppUsageResults.Find(x => x.Name.Equals(appName));                       
         }
 
         /// <summary>
@@ -107,10 +106,10 @@ namespace AppNarcServerTest
                 expectedAppUsage
             };
 
-            var appUsageProviderMock = new Mock<AppUsageProvider>();
+            var appUsageProviderMock = new Mock<IAppUsageProvider>();
             appUsageProviderMock.Setup(provider => provider.FindByUserAndName(userId, appName)).Returns(appUsage);
 
-            var appUsageAdministratorMock = new Mock<AppUsageAdministrator>();
+            var appUsageAdministratorMock = new Mock<IAppUsageAdministrator>();
             appUsageAdministratorMock.Setup(admin => admin.SaveAppUsage(new AppUsage()));
 
             AppUsageController appUsageController = new AppUsageController(appUsageProviderMock.Object, appUsageAdministratorMock.Object);

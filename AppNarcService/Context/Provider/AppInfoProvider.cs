@@ -14,17 +14,6 @@ namespace AppNarcServer.Context
     public class AppInfoProvider
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppInfoProvider"/> class.
-        /// </summary>
-        public AppInfoProvider()
-        {
-            string database = Environment.GetEnvironmentVariable("Database");
-            string databaseHost = Environment.GetEnvironmentVariable("DatabaseHost");
-            int.TryParse(Environment.GetEnvironmentVariable("DatabasePort"), out int databasePort);
-            new DB(database, databaseHost, databasePort);
-        }
-
-        /// <summary>
         /// Finds an <see cref="AppInfo"/> by its ID.
         /// </summary>
         /// <param name="id">ID of the <see cref="AppInfo"/> you want to find.</param>

@@ -1,15 +1,15 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ENV Database=appnarc
-ENV DatabaseHost=localhost
+ENV Database=appnarc-dev
+ENV DatabaseHost=192.168.1.136
 ENV DatabasePort=27017
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 WORKDIR /src
 COPY ["AppNarcServer.csproj", ""]
 RUN dotnet restore "./AppNarcServer.csproj"
