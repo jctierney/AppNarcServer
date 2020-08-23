@@ -13,6 +13,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1701;1702;CS8002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

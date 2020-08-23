@@ -6,7 +6,6 @@ namespace AppTrackerService.Controllers
     using AppNarcServer.Context.Administrator;
     using AppTrackerBackendService.Entity;
     using Microsoft.AspNetCore.Mvc;
-    using MongoDB.Entities;
 
     /// <summary>
     /// The controller that handles all of the GET/POST/DELETE for <see cref="AppUsage"/>.
@@ -15,9 +14,9 @@ namespace AppTrackerService.Controllers
     [ApiController]
     public class AppUsageController : ControllerBase
     {
-        private IAppUsageProvider appUsageProvider;
+        private readonly IAppUsageProvider appUsageProvider;
 
-        private IAppUsageAdministrator appUsageAdministrator;
+        private readonly IAppUsageAdministrator appUsageAdministrator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppUsageController"/> class.
@@ -64,23 +63,60 @@ namespace AppTrackerService.Controllers
             List<AppUsage> updatedAppUsages = new List<AppUsage>();
             foreach (AppUsage appUsage in appUsagesToAdd)
             {
-                string userId = appUsage.UserId;
-                string appName = appUsage.Name;
-                AppUsage existingAppUsage = this.appUsageProvider.FindByUserAndName(userId, appName);
-                if (existingAppUsage != null)
-                {
-                    existingAppUsage.TimeUsed += appUsage.TimeUsed;
-                    this.appUsageAdministrator.SaveAppUsage(existingAppUsage);
-                    updatedAppUsages.Add(appUsage);
-                }
-                else
-                {
-                    this.appUsageAdministrator.SaveAppUsage(appUsage);
-                    updatedAppUsages.Add(appUsage);
-                }
+                AppUsage updatedAppUsage = this.CreateOrUpdateAppUsage(appUsage);
+                updatedAppUsages.Add(updatedAppUsage);
             }
 
             return updatedAppUsages;
+        }
+
+        /// <summary>
+        /// Creates or updates an <see cref="AppUsage"/>.
+        /// If the AppUsage does not already exist, then it will be created. Otherwise, the time will be updated.
+        /// </summary>
+        /// <param name="appUsage">The <see cref="AppUsage"/> to update or create.</param>
+        /// <returns>The created or updated <see cref="AppUsage"/>.</returns>
+        protected AppUsage CreateOrUpdateAppUsage(AppUsage appUsage)
+        {
+            string userId = appUsage.UserId;
+            string appName = appUsage.Name;
+            AppUsage updatedAppUsage = this.appUsageProvider.FindByUserAndName(userId, appName);
+            if (updatedAppUsage != null)
+            {
+                updatedAppUsage = this.UpdateAndSaveAppUsageTime(updatedAppUsage, appUsage.TimeUsed);
+            }
+            else
+            {
+                updatedAppUsage = this.SaveAppUsage(appUsage);
+            }
+
+            return updatedAppUsage;
+        }
+
+        /// <summary>
+        /// Updates an <see cref="AppUsage"/>'s time used and saves the entity.
+        /// </summary>
+        /// <param name="appUsage">The AppUsage to update and save.</param>
+        /// <param name="additionalTimeUsed">The additional time the application was used - this is added to the time used of the AppUsage.</param>
+        /// <returns>The updated <see cref="AppUsage"/>.</returns>
+        protected AppUsage UpdateAndSaveAppUsageTime(AppUsage appUsage, int additionalTimeUsed)
+        {
+            AppUsage updatedAppUsage = appUsage;
+            updatedAppUsage.TimeUsed += additionalTimeUsed;
+            this.SaveAppUsage(updatedAppUsage);
+
+            return updatedAppUsage;
+        }
+
+        /// <summary>
+        /// Saves an <see cref="AppUsage"/>.
+        /// </summary>
+        /// <param name="appUsage">The <see cref="AppUsage"/> to save.</param>
+        /// <returns>The updated <see cref="AppUsage"/> record.</returns>
+        protected AppUsage SaveAppUsage(AppUsage appUsage)
+        {
+            this.appUsageAdministrator.SaveAppUsage(appUsage);
+            return appUsage;
         }
     }
 }

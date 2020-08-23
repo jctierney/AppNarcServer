@@ -10,18 +10,14 @@ namespace AppNarcServer.Context
     /// <summary>
     /// The provider for UserAppUsage entities.
     /// </summary>
-    public class UserAppUsageProvider
+    public class UserProvider : IUserProvider
     {
-        /// <summary>
-        /// Finds a <see cref="UserAppUsage"/> by the user name associated with it.
-        /// </summary>
-        /// <param name="userName">A unique username that identifies a specific user's app usage.</param>
-        /// <returns>The user's app usage based on the provided user name.</returns>
-        public UserAppUsage FindUserAppUsageByUserName(string userName)
+        /// <inheritdoc/>
+        public User FindUserByUserName(string userName)
         {
             try
             {
-                return DB.Find<UserAppUsage>()
+                return DB.Find<User>()
                                .Many(x => x.UserName == userName)
                                .First();
             }

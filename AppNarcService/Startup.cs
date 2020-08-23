@@ -35,8 +35,9 @@ namespace AppTrackerBackendService
                     .AllowAnyMethod());
             });
 
-            services.AddScoped<IAppUsageProvider, AppUsageProviderMock>();
+            services.AddScoped<IAppUsageProvider, AppUsageProvider>();
             services.AddScoped<IAppUsageAdministrator, AppUsageAdministrator>();
+            services.AddScoped<IUserProvider, UserProvider>();
 
             services.AddControllers();
         }
@@ -67,10 +68,18 @@ namespace AppTrackerBackendService
 
         public void ConnectDB()
         {
-            string database = Environment.GetEnvironmentVariable("Database");
-            string databaseHost = Environment.GetEnvironmentVariable("DatabaseHost");
-            int.TryParse(Environment.GetEnvironmentVariable("DatabasePort"), out int databasePort);
-            new DB(database, databaseHost, databasePort);
+            try
+            {
+                string database = Environment.GetEnvironmentVariable("Database");
+                string databaseHost = Environment.GetEnvironmentVariable("DatabaseHost");
+                int.TryParse(Environment.GetEnvironmentVariable("DatabasePort"), out int databasePort);
+                new DB(database, databaseHost, databasePort);
+            }
+            catch (TimeoutException exc)
+            {
+                System.Diagnostics.Debug.WriteLine("An exception was thrown while attempting to connect to the database.");
+                System.Diagnostics.Debug.WriteLine(exc.StackTrace);
+            }            
         }
     }
 }

@@ -11,16 +11,17 @@ namespace AppNarcServer.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAppUsageController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private UserAppUsageProvider userAppUsageProvider;
+        private readonly IUserProvider userProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserAppUsageController"/> class.
+        /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
-        public UserAppUsageController()
+        /// <param name="userProvider">Implementation to use of <see cref="IUserProvider"/>.</param>
+        public UserController(IUserProvider userProvider)
         {
-            this.userAppUsageProvider = new UserAppUsageProvider();
+            this.userProvider = userProvider;
         }
 
         /// <summary>
@@ -29,28 +30,31 @@ namespace AppNarcServer.Controllers
         /// <param name="userName">User name of the user to get their associated app usage.</param>
         /// <returns>A json formatted list of the user's app usage information.</returns>
         [HttpGet("{userName}")]
-        public UserAppUsage Get(string userName)
+        public User Get(string userName)
         {
-            UserAppUsage existing = this.userAppUsageProvider.FindUserAppUsageByUserName(userName);
+            User existing = this.userProvider.FindUserByUserName(userName);
             return existing;
         }
 
         /// <summary>
-        /// Creates a new <see cref="UserAppUsage"/>.
+        /// Creates a new <see cref="User"/>.
         /// </summary>
         /// <param name="userAppUsage">The user app usage to add.</param>
+        /// <returns>Returns the updated/created <see cref="User"/>.</returns>
         [HttpPost]
-        public void Post([FromBody] UserAppUsage userAppUsage)
+        public User Post([FromBody] User userAppUsage)
         {
-            UserAppUsage existingUserAppUsage = this.userAppUsageProvider.FindUserAppUsageByUserName(userAppUsage.UserName);
+            User existingUserAppUsage = this.userProvider.FindUserByUserName(userAppUsage.UserName);
 
             if (existingUserAppUsage != null)
             {
                 existingUserAppUsage.Save();
+                return existingUserAppUsage;
             }
             else
             {
                 userAppUsage.Save();
+                return userAppUsage;
             }
         }
     }
