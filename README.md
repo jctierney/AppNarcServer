@@ -39,6 +39,7 @@ docker run
 - C# / ASP.NET - main language and framework for the web service.
 - MongoDB - database.
 - NUnit - unit testing.
+- RabbitMQ - message broker service.
 
 ## Future Plans
 Eventually this will be in an issue tracker such as JIRA or in Azure DevOps.
